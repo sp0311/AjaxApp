@@ -120,14 +120,29 @@ channels.keys().forEach(channels);
 
 /***/ }),
 
-/***/ "./app/javascript/":
+/***/ "./app/javascript/checked.js":
 /*!***********************************!*\
-  !*** ./app/javascript/ ***!
+  !*** ./app/javascript/checked.js ***!
   \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
+function check() {
+  var posts = document.getElementsByClassName("post");
+  postsA = Array.from(posts);
+  postsA.forEach(function (post) {
+    post.addEventListener("click", function (e) {
+      // ここにクリックした時に行う「何らかの処理」を記述していく
+      var postId = post.getAttribute("data-id");
+      var XHR = new XMLHttpRequest();
+      XHR.open("GET", "/posts/".concat(postId), true);
+      XHR.responseType = "json";
+      XHR.send();
+    });
+  });
+}
 
+window.addEventListener("load", check);
 
 /***/ }),
 
@@ -161,7 +176,7 @@ __webpack_require__(/*! @rails/activestorage */ "./node_modules/@rails/activesto
 
 __webpack_require__(/*! channels */ "./app/javascript/channels/index.js");
 
-__webpack_require__(/*! ../checked */ "./app/javascript/");
+__webpack_require__(/*! ../checked */ "./app/javascript/checked.js");
 
 __webpack_require__(/*! ../memo */ "./app/javascript/memo.js"); // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
@@ -3266,4 +3281,4 @@ module.exports = function (module) {
 /***/ })
 
 /******/ });
-//# sourceMappingURL=application-5586ca8ca5ca97110cc5.js.map
+//# sourceMappingURL=application-2289ae930327d3823f46.js.map

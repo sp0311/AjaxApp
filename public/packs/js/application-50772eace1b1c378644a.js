@@ -120,14 +120,20 @@ channels.keys().forEach(channels);
 
 /***/ }),
 
-/***/ "./app/javascript/":
+/***/ "./app/javascript/checked.js":
 /*!***********************************!*\
-  !*** ./app/javascript/ ***!
+  !*** ./app/javascript/checked.js ***!
   \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
+function check() {
+  var posts = document.getElementsByClassName("post");
+  posts.forEach(function (post) {});
+}
 
+window.addEventListener("load", check);
+console.log(posts);
 
 /***/ }),
 
@@ -161,7 +167,7 @@ __webpack_require__(/*! @rails/activestorage */ "./node_modules/@rails/activesto
 
 __webpack_require__(/*! channels */ "./app/javascript/channels/index.js");
 
-__webpack_require__(/*! ../checked */ "./app/javascript/");
+__webpack_require__(/*! ../checked */ "./app/javascript/checked.js");
 
 __webpack_require__(/*! ../memo */ "./app/javascript/memo.js"); // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
@@ -3266,4 +3272,4 @@ module.exports = function (module) {
 /***/ })
 
 /******/ });
-//# sourceMappingURL=application-5586ca8ca5ca97110cc5.js.map
+//# sourceMappingURL=application-50772eace1b1c378644a.js.map

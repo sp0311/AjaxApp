@@ -120,14 +120,104 @@ channels.keys().forEach(channels);
 
 /***/ }),
 
-/***/ "./app/javascript/":
+/***/ "./app/javascript/checked.js":
 /*!***********************************!*\
-  !*** ./app/javascript/ ***!
+  !*** ./app/javascript/checked.js ***!
   \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
+// function check() {
+//   const posts = document.getElementsByClassName("post");
+//   postsA = Array.from(posts);
+//   postsA.forEach(function (post) {
+//      if (post.getAttribute("data-load") != null) {
+//       return null;
+//     }
+//     post.setAttribute("data-load", "true");
+//     post.addEventListener("click", (e) => {
+//      // ここにクリックした時に行う「何らかの処理」を記述していく
+//       const postId = post.getAttribute("data-id");
+//       const XHR = new XMLHttpRequest();
+//       XHR.open("GET", `/posts/${postId}`, true);
+//       XHR.responseType = "json";
+//       XHR.send();
+//       XHR.onload = () => {
+//         const item = XHR.response.post;
+//         if (item.checked === true) {
+//           post.setAttribute("data-check", "true");
+//         } else if (item.checked === false) {
+//           post.removeAttribute("data-check");
+//         }
+//         if (XHR.status != 200) {
+//           alert(`Error ${XHR.status}: ${XHR.statusText}`);
+//         } else {
+//           return null;
+//         }
+//       }
+//       XHR.onerror = () => {
+//         alert("Request failed");
+//       };
+//       e.preventDefault();
+//     });
+//   });
+// }
+// setInterval(check, 1000);
+function check() {
+  // 投稿のDOMを取得している
+  var posts = document.getElementsByClassName("post"); // 取得したDOMを配列に変換している
 
+  postsA = Array.from(posts);
+  postsA.forEach(function (post) {
+    if (post.getAttribute("data-load") != null) {
+      return null;
+    }
+
+    post.setAttribute("data-load", "true"); // 投稿をクリックした場合に実行する処理を定義している
+
+    post.addEventListener("click", function (e) {
+      // どの投稿をクリックしたのか、カスタムデータを利用して取得している
+      var postId = post.getAttribute("data-id"); // Ajaxに必要なオブジェクトを生成している
+
+      var XHR = new XMLHttpRequest(); // openでリクエストを初期化する
+
+      XHR.open("GET", "/posts/".concat(postId), true); // レスポンスのタイプを指定する
+
+      XHR.responseType = "json"; // sendでリクエストを送信する
+
+      XHR.send(); // レスポンスを受け取った時の処理を記述する
+
+      XHR.onload = function () {
+        var item = XHR.response.post;
+
+        if (item.checked === true) {
+          // 既読状態であれば、灰色に変わるcssを適用するためのカスタムデータを追加している
+          post.setAttribute("data-check", "true");
+        } else if (item.checked === false) {
+          // 未読状態であれば、カスタムデータを削除している
+          post.removeAttribute("data-check");
+        }
+
+        if (XHR.status != 200) {
+          // レスポンスの HTTP ステータスを解析し、該当するエラーメッセージをアラートで表示するようにしている
+          alert("Error ".concat(XHR.status, ": ").concat(XHR.statusText)); // e.g. 404: Not Found
+        } else {
+          return null;
+        }
+      }; // リクエストが送信できなかった時
+
+
+      XHR.onerror = function () {
+        alert("Request failed");
+      }; // イベントをキャンセルして、処理が重複しないようにしている
+
+
+      e.preventDefault();
+    });
+  });
+}
+
+setInterval(check, 1000);
 
 /***/ }),
 
@@ -161,7 +251,7 @@ __webpack_require__(/*! @rails/activestorage */ "./node_modules/@rails/activesto
 
 __webpack_require__(/*! channels */ "./app/javascript/channels/index.js");
 
-__webpack_require__(/*! ../checked */ "./app/javascript/");
+__webpack_require__(/*! ../checked */ "./app/javascript/checked.js");
 
 __webpack_require__(/*! ../memo */ "./app/javascript/memo.js"); // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
@@ -3266,4 +3356,4 @@ module.exports = function (module) {
 /***/ })
 
 /******/ });
-//# sourceMappingURL=application-5586ca8ca5ca97110cc5.js.map
+//# sourceMappingURL=application-956fa65222bfc3ec7dc4.js.map
